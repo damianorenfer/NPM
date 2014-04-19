@@ -40,3 +40,14 @@ gem 'capistrano-bundler'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+######
+# Custom
+######
+
+# Auth
+gem 'devise'
+
+# UI Desgin
+gem 'bootstrap-sass'
+gem 'bootstrap_form'
+

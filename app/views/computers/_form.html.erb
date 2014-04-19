@@ -1,0 +1,11 @@
+<%= bootstrap_form_for(@computer) do |f| %>     
+    <%= f.text_field :name %>
+    <%= f.text_field :ip_address %>      
+    <%= f.text_field :mac_address %>
+    <%= f.text_field :username %>
+    <%= f.password_field :password, value: "" %>
+    <%= f.form_group do %>
+    	<%= link_to 'Cancel', computers_path, class: "btn btn-danger" %>          
+    	<%= f.submit class: "btn btn-primary" %>
+    <% end %>  
+<% end %>

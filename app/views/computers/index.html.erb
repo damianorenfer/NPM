@@ -1,0 +1,29 @@
+<h1>Listing computers</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Ip address</th>
+      <th>Mac address</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @computers.each do |computer| %>
+      <tr>
+      	<td><%= link_to computer.name, computer %></td>
+        <td><%= computer.ip_address %></td>
+        <td><%= computer.mac_address %></td>        
+        <td><%= link_to 'Power on', power_on_computer_path(computer) %></td>
+        <td><%= link_to 'Edit', edit_computer_path(computer) %></td>
+        <td><%= link_to 'Destroy', computer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Computer', new_computer_path %>
