@@ -1,7 +1,8 @@
 <%= bootstrap_form_for(@computer) do |f| %>     
     <%= f.text_field :name %>
-    <%= f.text_field :ip_address %>      
     <%= f.text_field :mac_address %>
+    <%= f.text_field :ip_address %> 
+    <%= f.select(:netmask_cidr, options_for_select(Computer.AllCidr, selected_key=@computer.netmask_cidr))%>         
     <%= f.text_field :username %>
     <%= f.password_field :password, value: "" %>
     <%= f.form_group do %>

@@ -1,10 +1,16 @@
 class ComputersController < ApplicationController
-  before_action :set_computer, only: [:show, :edit, :update, :destroy, :power_on]
+  before_action :set_computer, only: [:show, :edit, :update, :destroy, :power_on, :power_off]
 
   # GET /computers
   # GET /computers.json
   def index
     @computers = Computer.all
+    
+    #
+    #@computers.each do |computer|
+    #  computer.update_power_status
+    #end
+    
   end
 
   # GET /computers/1
@@ -64,7 +70,7 @@ class ComputersController < ApplicationController
   def power_on
     @computer.power_on
     respond_to do |format|      
-        format.html { redirect_to @computer, notice: 'Wake on LAN operation in progress.' }
+        format.html { redirect_to computers_url, notice: "Wake on LAN operation in progress for #{@computer.name}" }
         format.json { render :show, status: :ok, location: @computer }      
     end
   end
@@ -72,7 +78,7 @@ class ComputersController < ApplicationController
   def power_off
     @computer.power_off
     respond_to do |format|      
-        format.html { redirect_to @computer, notice: 'Shutdown operation in progress.' }
+        format.html { redirect_to computers_url, notice: "Shutdown operation in progress for #{@computer.name}" }
         format.json { render :show, status: :ok, location: @computer }      
     end
   end
@@ -85,6 +91,6 @@ class ComputersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def computer_params
-      params.require(:computer).permit(:ip_address, :mac_address, :name, :username, :password)
+      params.require(:computer).permit(:ip_address, :mac_address, :name, :username, :password, :netmask_cidr)
     end
 end

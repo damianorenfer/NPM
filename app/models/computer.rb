@@ -3,12 +3,16 @@ class Computer < ActiveRecord::Base
   before_update :update_password
   before_save :mac_address_to_upper
 
-  IP_REGEX = /\A(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\z/
+  #IP_REGEX = /\A(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\z/
+  #HOSTNAME_REGEX = /\A(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])\z/
+  HOSTNAME_AND_IP = /(\A(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\z)|(\A(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])\z)/
   MAC_REGEX = /\A([0-9A-F]{2}[:]){5}([0-9A-F]{2})\z/i
 
   validates :ip_address, presence: true,
-                         format: {with: IP_REGEX, message: "must be in the form : xxx.xxx.xxx.xxx"}
+                         uniqueness: true,
+                         format: {with: HOSTNAME_AND_IP, message: "not a valid domain name or IP address"}
   validates :mac_address, presence: true,
+                          uniqueness: true,
                           format: {with: MAC_REGEX, message: "must be in the form : XX:XX:XX:XX:XX:XX"}
   validates :name, presence: true
   validates :password, presence: true
@@ -28,11 +32,30 @@ class Computer < ActiveRecord::Base
   end
 
   def power_on
-    out = `wakeonlan #{self.mac_address}`
+    require 'ipaddr'
+    require 'resolv'
+    
+    ip = Resolv.getaddress self.ip_address
+    ipaddr = IPAddr.new ip
+    mask = IPAddr.new("255.255.255.255").mask(self.netmask_cidr)
+    
+    broadcast = ipaddr | (~mask)            
+    
+    out = `wakeonlan -i #{broadcast.to_s} #{self.mac_address}`
+    #update_power_status
   end  
   
   def power_off
-    `./bin/rshutdown.sh #{self.ip_address} #{self.username} #{self.decrypt_password}`
+    out = `./bin/rshutdown.sh #{self.ip_address} #{self.username} #{decrypt_password}`
+    #update_power_status
+  end
+  
+  def self.AllCidr
+    cidr = []
+    for i in 1..32
+      cidr << i
+    end
+    cidr
   end
 
   private

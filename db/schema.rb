@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140419185434) do
+ActiveRecord::Schema.define(version: 20140425084518) do
 
   create_table "computers", force: true do |t|
     t.string   "ip_address"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20140419185434) do
     t.string   "password_encrypt_key"
     t.string   "password"
     t.integer  "power_status",         default: 0
+    t.integer  "netmask_cidr",         default: 24
   end
 
 end
