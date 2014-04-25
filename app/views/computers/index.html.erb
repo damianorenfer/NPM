@@ -20,9 +20,9 @@
 			<td><%= computer.mac_address %></td>
 			<td> 
 				<% if computer.power_status == "on" %>
-					<%= link_to raw('<span class="label label-success">On</span>'), power_off_computer_path(computer), title: "Power off", data: {toggle: "tooltip", placement: "top", animation: "true"} %>
+					<%= link_to raw('<span class="label label-success">On</span>'), power_off_computer_path(computer), title: "Power off this computer!", data: {toggle: "tooltip", placement: "top", animation: "true"} %>
 				<% else %>
-					<%= link_to raw('<span class="label label-danger">Off</span>'), power_on_computer_path(computer), title: "Power on", data: {toggle: "tooltip", placement: "top", animation: "true"} %>
+					<%= link_to raw('<span class="label label-danger">Off</span>'), power_on_computer_path(computer), title: "Power on this computer!", data: {toggle: "tooltip", placement: "top", animation: "true"} %>
 				<% end %> 
 			</td>
 			<td><%= link_to icon('edit'), edit_computer_path(computer), class: "btn btn-primary", title: "Edit", data: {toggle: "tooltip", placement: "top", animation: "true"} %></td>
