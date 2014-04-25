@@ -26,10 +26,15 @@ class Computer < ActiveRecord::Base
     else
       self.power_status = "off"
     end
+    self.save
   end
   
   def mac_address_to_upper
     self.mac_address.upcase!
+  end
+  
+  def netmask
+    IPAddr.new("255.255.255.255").mask(self.netmask_cidr)
   end
 
   def power_on
@@ -37,8 +42,8 @@ class Computer < ActiveRecord::Base
     require 'resolv'
     
     ip = Resolv.getaddress self.ip_address
-    ipaddr = IPAddr.new ip
-    mask = IPAddr.new("255.255.255.255").mask(self.netmask_cidr)
+    ipaddr = IPAddr.new ip    
+    mask = netmask
     
     broadcast = ipaddr | (~mask)            
     

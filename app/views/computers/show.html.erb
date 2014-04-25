@@ -5,6 +5,9 @@
 		<%= bootstrap_form_for(@computer) do |f| %>
 		<%= f.static_control :mac_address %>
 		<%= f.static_control :ip_address %>
+		<%= f.static_control nil, label: "Netmask" do %>
+			<%= @computer.netmask %> (/<%= @computer.netmask_cidr %>)
+		<% end %>  
 		<%= f.static_control :username %>
 		<%= f.static_control nil, label: "Power status" do %>  
 			<% if @computer.power_status == "on" %>
