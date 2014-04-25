@@ -15,7 +15,8 @@ class Computer < ActiveRecord::Base
                           uniqueness: true,
                           format: {with: MAC_REGEX, message: "must be in the form : XX:XX:XX:XX:XX:XX"}
   validates :name, presence: true
-  validates :password, presence: true
+  validates :username, presence: true
+  validates :password, presence: true  
   
   enum power_status: [:off, :on]
   

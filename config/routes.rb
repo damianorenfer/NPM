@@ -1,9 +1,17 @@
 Rails.application.routes.draw do
 
+  root to: 'computers#index'
+
   resources :computers do
+    
     member do
       get 'power_on'
       get 'power_off'
+      get 'update_power_status'
+    end
+    
+    collection do
+      get 'update_all_power_status'
     end
   end
 # The priority is based upon order of creation: first created -> highest priority.

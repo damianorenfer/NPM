@@ -42,10 +42,13 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Computers <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li class="<%= 'active' if params[:controller] == 'computers' && params[:action] == 'index' %>">
-									<%= link_to "Show all", computers_path %>
+									<%= link_to icon("list","Show all"), computers_path %>
+								</li>
+								<li>
+									<%= link_to icon("refresh", "Refresh power statuses"), new_computer_path %>
 								</li>
 								<li class="<%= 'active' if params[:controller] == 'computers' && params[:action] == 'new' %>">
-									<%= link_to "New computer", new_computer_path %>
+									<%= link_to icon("plus", "New computer"), new_computer_path %>
 								</li>
 							</ul>
 						</li>
@@ -67,15 +70,26 @@
 
 		<div class="container">
 			<div class="row">
+				<div class="col-md-12">
 				<% if notice %>
 				<div class="alert alert-info">
 					<%= notice %>
-				</div>
+				</div>				
 				<% end %>
+				</div>
 			</div>
 			<div class="row">
+				<div class="col-md-12">
 				<%= yield %>
+				</div>
 			</div>
+			
+			<hr />
+			<footer>
+				<p>
+					&copy; <%= link_to "HE-Arc Engineering", "http://ingenierie.he-arc.ch"%> 2014 by Damiano Renfer
+				</p>
+			</footer>
 		</div><!-- /.container -->
 		<script type="text/javascript">
 			$('[data-toggle="tooltip"]').tooltip();

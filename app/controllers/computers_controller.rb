@@ -1,5 +1,5 @@
 class ComputersController < ApplicationController
-  before_action :set_computer, only: [:show, :edit, :update, :destroy, :power_on, :power_off]
+  before_action :set_computer, only: [:show, :edit, :update, :destroy, :power_on, :power_off, :update_power_status]
 
   # GET /computers
   # GET /computers.json
@@ -11,6 +11,19 @@ class ComputersController < ApplicationController
     #  computer.update_power_status
     #end
     
+  end
+  
+  def update_all_power_status
+    @computers = Computer.all
+        
+    @computers.each do |computer|
+      computer.update_power_status
+    end
+    
+    respond_to do |format|      
+        format.html { redirect_to computers_path, notice: 'Computers power status refreshed.' }
+        format.json { head :no_content }      
+    end
   end
 
   # GET /computers/1
@@ -80,6 +93,15 @@ class ComputersController < ApplicationController
     respond_to do |format|      
         format.html { redirect_to computers_url, notice: "Shutdown operation in progress for #{@computer.name}" }
         format.json { render :show, status: :ok, location: @computer }      
+    end
+  end
+  
+  def update_power_status                
+    @computer.update_power_status    
+    
+    respond_to do |format|      
+        format.html { redirect_to @computer, notice: "#{@computer.name} power status refreshed." }
+        format.json { render :show, status: :ok, location: @computer }  
     end
   end
 

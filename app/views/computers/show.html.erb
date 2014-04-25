@@ -18,6 +18,7 @@
 </div>
 <div class="row">
 	<div class="col-md-12">
+		<%= link_to icon('refresh'), update_power_status_computer_path(@computer), class: "btn btn-primary", title: "Refresh power status", data: {toggle: "tooltip", placement: "top", animation: "true"} %>
 		<%= link_to icon('power-off'), power_on_computer_path(@computer), class: "btn btn-success", title: "Force power on", data: {toggle: "tooltip", placement: "top", animation: "true"} %>
 		<%= link_to icon('power-off'), power_off_computer_path(@computer), class: "btn btn-danger", title: "Force power off", data: {toggle: "tooltip", placement: "top", animation: "true"} %>
 		<%= link_to icon('edit'), edit_computer_path(@computer), class: "btn btn-primary", title: "Edit", data: {toggle: "tooltip", placement: "top", animation: "true"} %>
