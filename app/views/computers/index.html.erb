@@ -1,36 +1,37 @@
-<h1>Listing computers</h1>
+<h1>All computers</h1>
+<hr />
 
 <table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Ip address</th>
-      <th>Mac address</th>
-      <th>Name</th>
-      <th>Power status</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Ip address</th>
+			<th>Mac address</th>
+			<th>Power status</th>
+			<th colspan="2"></th>
+		</tr>
+	</thead>
 
-  <tbody>
-    <% @computers.each do |computer| %>
-      <tr>
-      	<td><%= link_to computer.name, computer %></td>
-        <td><%= computer.ip_address %></td>
-        <td><%= computer.mac_address %></td>
-        <td>
-        	<% if computer.power_status == "on" %>
-        		<%= link_to raw('<span class="label label-success">On</span>'), power_off_computer_path(computer) %>         		        	
-        	<% else %>        		        		
-        		<%= link_to raw('<span class="label label-danger">Off</span>'), power_on_computer_path(computer) %>
-        	<% end %>        	
-        </td>                
-        <td><%= link_to icon('edit'), edit_computer_path(computer), class: "btn btn-primary" %></td>
-        <td><%= link_to icon('trash-o'), computer, method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
+	<tbody>
+		<% @computers.each do |computer| %>
+		<tr>
+			<td><%= link_to computer.name, computer %></td>
+			<td><%= computer.ip_address %></td>
+			<td><%= computer.mac_address %></td>
+			<td> 
+				<% if computer.power_status == "on" %>
+					<%= link_to raw('<span class="label label-success">On</span>'), power_off_computer_path(computer), title: "Power off", data: {toggle: "tooltip", placement: "top", animation: "true"} %>
+				<% else %>
+					<%= link_to raw('<span class="label label-danger">Off</span>'), power_on_computer_path(computer), title: "Power on", data: {toggle: "tooltip", placement: "top", animation: "true"} %>
+				<% end %> 
+			</td>
+			<td><%= link_to icon('edit'), edit_computer_path(computer), class: "btn btn-primary", title: "Edit", data: {toggle: "tooltip", placement: "top", animation: "true"} %></td>
+			<td><%= link_to icon('trash-o'), computer, method: :delete, class: "btn btn-danger", title: "Delete", data: { confirm: 'Are you sure?', toggle: "tooltip", placement: "top", animation: "true"} %></td>
+		</tr>
+		<% end %>
+	</tbody>
 </table>
 
 <br>
 
-<%= link_to 'New Computer', new_computer_path %>
+<%= link_to 'New Computer', new_computer_path, class: "btn btn-primary" %>

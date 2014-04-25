@@ -1,17 +1,27 @@
-<p>
-  <strong>Ip address:</strong>
-  <%= @computer.ip_address %>
-</p>
+<h1><%= @computer.name %></h1>
+<hr />
+<div class="row">
+	<div class="col-md-12">
+		<%= bootstrap_form_for(@computer) do |f| %>
+		<%= f.static_control :mac_address %>
+		<%= f.static_control :ip_address %>
+		<%= f.static_control :username %>
+		<%= f.static_control nil, label: "Power status" do %>  
+			<% if @computer.power_status == "on" %>
+				<span class="label label-success">On</span>		
+			<% else %>
+				<span class="label label-danger">Off</span>
+			<% end %>		
+		<% end %>
+		<% end %>
+	</div>	
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<%= link_to icon('power-off'), power_on_computer_path(@computer), class: "btn btn-success", title: "Force power on", data: {toggle: "tooltip", placement: "top", animation: "true"} %>
+		<%= link_to icon('power-off'), power_off_computer_path(@computer), class: "btn btn-danger", title: "Force power off", data: {toggle: "tooltip", placement: "top", animation: "true"} %>
+		<%= link_to icon('edit'), edit_computer_path(@computer), class: "btn btn-primary", title: "Edit", data: {toggle: "tooltip", placement: "top", animation: "true"} %>
+		<%= link_to icon('trash-o'), @computer, method: :delete, class: "btn btn-danger", title: "Delete", data: { confirm: 'Are you sure?', toggle: "tooltip", placement: "top", animation: "true"} %>
+	</div>
+</div>
 
-<p>
-  <strong>Mac address:</strong>
-  <%= @computer.mac_address %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @computer.name %>    
-</p>
-
-<%= link_to 'Edit', edit_computer_path(@computer) %> |
-<%= link_to 'Back', computers_path %>

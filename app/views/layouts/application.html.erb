@@ -34,18 +34,20 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">NPM</a>
+					<a class="navbar-brand" href="#">NPM <%= icon('power-off') %></a>
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active">
-							<a href="#">Home</a>
-						</li>
-						<li>
-							<a href="#about">About</a>
-						</li>
-						<li>
-							<a href="#contact">Contact</a>
+						<li class="dropdown <%= 'active' if params[:controller] == 'computers' %>">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Computers <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li class="<%= 'active' if params[:controller] == 'computers' && params[:action] == 'index' %>">
+									<%= link_to "Show all", computers_path %>
+								</li>
+								<li class="<%= 'active' if params[:controller] == 'computers' && params[:action] == 'new' %>">
+									<%= link_to "New computer", new_computer_path %>
+								</li>
+							</ul>
 						</li>
 					</ul>
 					<form class="navbar-form navbar-right" role="form">
@@ -75,5 +77,8 @@
 				<%= yield %>
 			</div>
 		</div><!-- /.container -->
+		<script type="text/javascript">
+			$('[data-toggle="tooltip"]').tooltip();
+		</script>
 	</body>
 </html>
