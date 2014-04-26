@@ -58,7 +58,7 @@ class Computer < ActiveRecord::Base
   end  
   
   def power_off
-    out = `./bin/rshutdown.sh #{self.ip_address} #{self.username} #{decrypt_password}`
+    out = `./lib/npm/rshutdown.sh #{self.ip_address} #{self.username} #{decrypt_password}`
     #update_power_status
   end
   
