@@ -11,7 +11,13 @@
 			<th colspan="2"></th>
 		</tr>
 	</thead>
-
+	<tfoot>
+		<tr>
+			<td colspan="6">
+			<%= will_paginate @collection, renderer: BootstrapPagination::Rails %>
+			</td>
+		</tr>
+	</tfoot>
 	<tbody>
 		<% @computers.each do |computer| %>
 		<tr>
@@ -29,7 +35,7 @@
 			<td><%= link_to icon('trash-o'), computer, method: :delete, class: "btn btn-danger", title: "Delete", data: { confirm: 'Are you sure?', toggle: "tooltip", placement: "top", animation: "true"} %></td>
 		</tr>
 		<% end %>
-	</tbody>
+	</tbody>	
 </table>
 
 <br>

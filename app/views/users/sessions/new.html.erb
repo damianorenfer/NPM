@@ -1,0 +1,13 @@
+<%= bootstrap_form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: "form-signin", role: "form"}) do |f| %>
+	<h2 class="form-signin-heading">Please sign in</h2>
+	<%= f.email_field :email, hide_label: :true, autofocus: true, placeholder: "email" %>
+	<%= f.password_field :password, hide_label: :true, autocomplete: "off", placeholder: "password" %>
+	
+	<% if devise_mapping.rememberable? -%>	
+		<%= f.check_box :remember_me %>	
+	<% end -%>
+		
+	<%= f.submit "Sign in", class: "btn btn-lg btn-primary btn-block"%>	
+<% end %>
+
+<%= render "users/shared/links" %>

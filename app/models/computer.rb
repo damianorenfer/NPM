@@ -20,6 +20,9 @@ class Computer < ActiveRecord::Base
   
   enum power_status: [:off, :on]
   
+  #pagination
+  self.per_page = 10
+  
   def update_power_status
     if system("ping -c 2 #{self.ip_address}")
       self.power_status = "on"

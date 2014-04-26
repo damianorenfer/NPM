@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-
-  root to: 'computers#index'
+  devise_for :users
+   root to: 'computers#index'
 
   resources :computers do
     

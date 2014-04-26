@@ -51,3 +51,6 @@ gem 'devise'
 gem 'bootstrap-sass'
 gem 'bootstrap_form'
 gem 'font-awesome-sass'
+
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'

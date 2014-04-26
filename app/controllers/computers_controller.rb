@@ -4,7 +4,8 @@ class ComputersController < ApplicationController
   # GET /computers
   # GET /computers.json
   def index
-    @computers = Computer.all
+    @computers = Computer.all.paginate(page: params[:page])
+
     
     #
     #@computers.each do |computer|
@@ -113,6 +114,6 @@ class ComputersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def computer_params
-      params.require(:computer).permit(:ip_address, :mac_address, :name, :username, :password, :netmask_cidr)
+      params.require(:computer).permit(:ip_address, :mac_address, :name, :username, :password, :netmask_cidr, :page)
     end
 end
