@@ -23,13 +23,13 @@ set :deploy_to, '/var/www/npm'
 # set :pty, true
 
 # Default value for :linked_files is []
-#set :linked_files, %w{config/database.yml}
+set :linked_files, %w{config/database.yml config/secrets.yml}
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 # Default value for default_env is {}
-# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+#set :default_env, { }
 
 # Default value for keep_releases is 5
 set :keep_releases, 2
