@@ -15,12 +15,12 @@ if [[ $ssh_status != 0 ]]; then
 	echo "Trying via Telnet (Windows)..."
 	(
 	echo open $host
-	sleep 2
+	sleep 5
 	echo -en "$username\r\n"
-	sleep 1
+	sleep 4
 	echo -en "$password\r\n"
-	sleep 1
-	echo -en "shutdown /s /t 0\r\n"
+	sleep 4
+	echo -en "shutdown /s /t 60\r\n"
 	sleep 1
 	) | telnet > /dev/null 2>&1
 else
