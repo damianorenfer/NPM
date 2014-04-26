@@ -5,6 +5,7 @@ Devise.setup do |config|
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
   # config.secret_key = 'b315fafb4908729ef841060fa79e6939f0fd9f4071cf20f98dd6125e3cfe9292138c6ad5072a0dbbdc3e0cec03c9a969bf626961f277adc9b28fdf2920442700'
+  config.secret_key = 'b7e1855e846f1f2bfbd8874cffdf17bb8a85d61b30aa1e4b66f53a9cbf7d610e458c7d63d59238a1b98ebf561ad088fdb13549d41a702badc485cb9a4882e4b1'
   
   config.scoped_views = true
 
