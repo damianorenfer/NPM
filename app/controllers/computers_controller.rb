@@ -1,16 +1,15 @@
 class ComputersController < ApplicationController
-  before_action :check_is_user_connected
+  before_action :check_is_user_connected  
   before_action :set_computer, only: [:show, :edit, :update, :destroy, :power_on, :power_off, :update_power_status]
+  before_action :set_computers, only: [:index, :update_all_power_status]
+  before_action :check_is_owner, only: [:show, :edit, :update, :destroy, :power_on, :power_off, :update_power_status]
 
   # GET /computers
   # GET /computers.json
-  def index    
-    @computers = current_user.computers.paginate(page: params[:page])      
+  def index        
   end
   
-  def update_all_power_status
-    @computers = Computer.all
-        
+  def update_all_power_status           
     @computers.each do |computer|
       computer.update_power_status
     end
@@ -106,6 +105,10 @@ class ComputersController < ApplicationController
     def set_computer
       @computer = Computer.find(params[:id])
     end
+    
+    def set_computers
+      @computers = current_user.computers.paginate(page: params[:page])      
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def computer_params
@@ -116,6 +119,15 @@ class ComputersController < ApplicationController
       unless user_signed_in?
         respond_to do |format|      
           format.html { redirect_to new_user_session_url }
+          format.json { head :no_content }  
+        end
+      end
+    end
+    
+    def check_is_owner
+      if current_user != @computer.user
+        respond_to do |format|      
+          format.html { redirect_to computers_url, alert: "You can't access this computer!" }
           format.json { head :no_content }  
         end
       end
