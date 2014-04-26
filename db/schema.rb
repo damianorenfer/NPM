@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140426092027) do
+ActiveRecord::Schema.define(version: 20140426115028) do
 
   create_table "computers", force: true do |t|
     t.string   "ip_address"
@@ -24,7 +24,10 @@ ActiveRecord::Schema.define(version: 20140426092027) do
     t.string   "password"
     t.integer  "power_status",         default: 0
     t.integer  "netmask_cidr",         default: 24
+    t.integer  "user_id"
   end
+
+  add_index "computers", ["user_id"], name: "index_computers_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

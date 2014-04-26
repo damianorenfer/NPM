@@ -1,17 +1,11 @@
 class ComputersController < ApplicationController
+  before_action :check_is_user_connected
   before_action :set_computer, only: [:show, :edit, :update, :destroy, :power_on, :power_off, :update_power_status]
 
   # GET /computers
   # GET /computers.json
-  def index
-    @computers = Computer.all.paginate(page: params[:page])
-
-    
-    #
-    #@computers.each do |computer|
-    #  computer.update_power_status
-    #end
-    
+  def index    
+    @computers = current_user.computers.paginate(page: params[:page])      
   end
   
   def update_all_power_status
@@ -45,6 +39,7 @@ class ComputersController < ApplicationController
   # POST /computers.json
   def create
     @computer = Computer.new(computer_params)
+    @computer.user = current_user
 
     respond_to do |format|
       if @computer.save
@@ -115,5 +110,14 @@ class ComputersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def computer_params
       params.require(:computer).permit(:ip_address, :mac_address, :name, :username, :password, :netmask_cidr, :page)
+    end
+    
+    def check_is_user_connected
+      unless user_signed_in?
+        respond_to do |format|      
+          format.html { redirect_to new_user_session_url }
+          format.json { head :no_content }  
+        end
+      end
     end
 end

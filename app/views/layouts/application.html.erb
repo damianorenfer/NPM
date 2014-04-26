@@ -37,6 +37,7 @@
 					<a class="navbar-brand" href="#">NPM <%= icon('power-off') %></a>
 				</div>
 				<div class="collapse navbar-collapse">
+					<% if user_signed_in? %>
 					<ul class="nav navbar-nav">
 						<li class="dropdown <%= 'active' if params[:controller] == 'computers' %>">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Computers <b class="caret"></b></a>
@@ -53,26 +54,30 @@
 							</ul>
 						</li>
 					</ul>
-					<% unless user_signed_in? %>
-					<%= bootstrap_form_for(:user, url: session_path(:user), layout: :inline, html: { class: "navbar-form navbar-right", role: "form"}) do |f| %>
-						<%= f.text_field :email, hide_label: :true, placeholder: "email"%>
-  						<%= f.password_field :password, hide_label: :true, placeholder: "password" %>   
-  						<%= f.submit 'Sign in', class: "btn btn-primary" %>
-					<!--
-					<form class="navbar-form navbar-right" role="form">
-						<div class="form-group">
-							<input type="text" placeholder="Email" class="form-control">
-						</div>
-						<div class="form-group">
-							<input type="password" placeholder="Password" class="form-control">
-						</div>
-						<button type="submit" class="btn btn-primary">
-							Sign in
-						</button>
-					</form>
-					-->
 					<% end %>
+					<ul class="nav navbar-nav navbar-right">
+					<% if user_signed_in? %>
+						<% if current_user.email? then %>
+						<li>
+						<%= link_to("Connected as " + current_user.email, edit_user_registration_path) %>
+						</li>						
+						<li>
+						<%= link_to(icon('sign-out', 'Sign out'), destroy_user_session_path(), method: :delete) %>
+						</li>
+						<% end %>
+					<% else %>
+						<li>
+						<%= link_to("Sign in", new_user_session_path) %>
+						</li>						
+						<li>
+							<p class="navbar-text">|</p>
+						</li>
+						<li>
+						<%= link_to("Sign up", new_user_registration_path) %>
+						</li>
 					<% end %>
+					
+					</ul>
 				</div><!--/.nav-collapse -->
 			</div>
 		</div>

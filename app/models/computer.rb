@@ -2,6 +2,8 @@ class Computer < ActiveRecord::Base
   before_create :set_encrypt_key, :encrypt_password
   before_update :update_password
   before_save :mac_address_to_upper
+  
+  belongs_to :user
 
   #IP_REGEX = /\A(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\z/
   #HOSTNAME_REGEX = /\A(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])\z/
@@ -9,12 +11,13 @@ class Computer < ActiveRecord::Base
   MAC_REGEX = /\A([0-9A-F]{2}[:]){5}([0-9A-F]{2})\z/i
 
   validates :ip_address, presence: true,
-                         uniqueness: true,
+                         uniqueness: {scope: :user},
                          format: {with: HOSTNAME_AND_IP, message: "not a valid domain name or IP address"}
   validates :mac_address, presence: true,
-                          uniqueness: true,
+                          uniqueness: {scope: :user},
                           format: {with: MAC_REGEX, message: "must be in the form : XX:XX:XX:XX:XX:XX"}
-  validates :name, presence: true
+  validates :name, presence: true,
+                   uniqueness: {scope: :user}
   validates :username, presence: true
   validates :password, presence: true  
   

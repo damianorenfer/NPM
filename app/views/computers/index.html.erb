@@ -1,6 +1,11 @@
 <h1>All computers</h1>
 <hr />
 
+<% if @computers.size <= 0 %>
+	<div class="alert alert-info">
+		You don't have any registered computers at the moment! Start creating <%= link_to "here", new_computer_path %>.
+	</div>
+<% else %>
 <table class="table table-hover">
 	<thead>
 		<tr>
@@ -38,7 +43,10 @@
 	</tbody>	
 </table>
 
-<br>
+<br />
+<%= link_to 'Refresh power statuses', update_all_power_status_computers_path , class: "btn btn-primary", title: "Be carefull, may take several seconds", data: {toggle: "tooltip", placement: "top", animation: "true"} %>
+
+<% end %>
 
 <%= link_to 'New Computer', new_computer_path, class: "btn btn-primary" %>
-<%= link_to 'Refresh power statuses', update_all_power_status_computers_path , class: "btn btn-primary", title: "Be carefull, may take several seconds", data: {toggle: "tooltip", placement: "top", animation: "true"} %>
+
