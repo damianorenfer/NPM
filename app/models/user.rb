@@ -6,4 +6,6 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :rememberable, :trackable
+         
+  validates :email, uniqueness: true
 end
